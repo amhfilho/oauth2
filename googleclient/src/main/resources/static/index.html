@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-resource.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.9/ngStorage.min.js"></script>
+    <script src="oauth-ng.js"></script>
+    <script src="app.js"></script>
+    <oauth
+            site="https://accounts.google.com/o/oauth2"
+            client-id="798829964556-c7rbhbj6p87tjhjh9gub7hcvd5h4lkpr.apps.googleusercontent.com"
+            authorize-path="/auth"
+            redirect-uri="http://localhost:8080/client"
+            scope="profile email"
+            template="oauthTemp.html">
+    </oauth>
+
+</head>
+<body ng-app="myApp" ng-controller="mainCtrl">
+
+<h1>Home</h1>
+<a href="user">Restricted</a>
+</body>
+</html>

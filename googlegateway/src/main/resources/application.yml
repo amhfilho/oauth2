@@ -1,0 +1,18 @@
+zuul:
+  ignoreSecurityHeaders: false
+  sensitiveHeaders:
+  #ignoredServices: '*'
+  routes:
+    resource:
+      url: http://localhost:9090/resource
+      path: /service/**
+
+server:
+  contextPath: /gateway
+  port: 8090
+#  ssl:
+#    key-alias:    pim
+#    key-password: password1
+#    key-store: 'c:/temp/pim.jks'
+#    key-store-provider: SUN
+#    key-store-type: JKS

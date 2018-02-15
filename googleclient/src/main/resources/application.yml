@@ -1,0 +1,36 @@
+#zuul:
+#  #ignoredServices: '*'
+#  routes:
+#    resource.url: http://localhost:9090/resource
+
+security:
+    sessions: ALWAYS
+    oauth2:
+        client:
+            clientId: 798829964556-c7rbhbj6p87tjhjh9gub7hcvd5h4lkpr.apps.googleusercontent.com
+            clientSecret: gdmSE3Zwk1zk5sfnLgoYwqKP
+            accessTokenUri: https://www.googleapis.com/oauth2/v3/token
+            userAuthorizationUri: https://accounts.google.com/o/oauth2/auth
+            tokenName: oauth_token
+            authenticationScheme: query
+            clientAuthenticationScheme: form
+            scope: profile,email
+        resource:
+            userInfoUri: https://www.googleapis.com/userinfo/v2/me
+            preferTokenInfo: false
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: DEBUG
+
+server:
+  port: 8080
+  contextPath: /client
+
+#  ssl:
+#    key-store: keystore.p12
+#    key-store-password: password
+#    keyStoreType: PKCS12
+#    keyAlias: multe

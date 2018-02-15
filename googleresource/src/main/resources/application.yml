@@ -1,0 +1,19 @@
+security:
+  sessions: NEVER
+  oauth2:
+    #clientId: 798829964556-c7rbhbj6p87tjhjh9gub7hcvd5h4lkpr.apps.googleusercontent.com
+    resource:
+      #userInfoUri: https://idpmobdev.embraer.com.br/nidp/oauth/nam/userinfo
+      userInfoUri: https://www.googleapis.com/userinfo/v2/me
+      #tokenInfoUri: https://www.googleapis.com/userinfo/v2/me
+      filter-order: 3
+server:
+  port: 9090
+  contextPath: /resource
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: DEBUG
+tokenInfoUri: https://www.googleapis.com/userinfo/v2/me
+clientId: 798829964556-c7rbhbj6p87tjhjh9gub7hcvd5h4lkpr.apps.googleusercontent.com
