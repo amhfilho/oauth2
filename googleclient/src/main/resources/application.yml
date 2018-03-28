@@ -4,7 +4,6 @@
 #    resource.url: http://localhost:9090/resource
 
 security:
-    sessions: ALWAYS
     oauth2:
         client:
             clientId: 798829964556-c7rbhbj6p87tjhjh9gub7hcvd5h4lkpr.apps.googleusercontent.com
