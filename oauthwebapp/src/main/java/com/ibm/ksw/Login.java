@@ -27,7 +27,6 @@ public class Login extends HttpServlet {
         params.put("scope", Utils.encode((reader.scope())));
 
         return buildUrl(reader.authorizationUri(), params);
-
     }
 
     private String buildUrl(String authEndpoint, Map<String, String> params) {

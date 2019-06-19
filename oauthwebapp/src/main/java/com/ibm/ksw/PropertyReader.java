@@ -2,7 +2,11 @@ package com.ibm.ksw;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class PropertyReader {
     private final static String PROPERTY_FILE = "application.properties";
@@ -57,6 +61,25 @@ public class PropertyReader {
     }
 
     public String userInfoUri() { return properties.getProperty(USER_INFO_URI); }
+
+    public String getAuthorizationEndpoint() {
+        final Map<String, String> params = new ConcurrentHashMap<>();
+        params.put("client_id", Utils.encode(this.clientId()));
+        params.put("response_type", "code");
+        params.put("redirect_uri", Utils.encode((this.authorizationCallbackUri())));
+        params.put("scope", Utils.encode((this.scope())));
+
+        return buildUrl(this.authorizationUri(), params);
+    }
+
+    private String buildUrl(String authEndpoint, Map<String, String> params) {
+        final List<String> authParams = new ArrayList<>(params.size());
+
+        params.forEach((param, value) -> authParams.add(param + "=" + value));
+
+        return authEndpoint + "?" + authParams.stream()
+                .reduce((a,b) -> a + "&" + b).get();
+    }
 
 
 

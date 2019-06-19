@@ -30,29 +30,24 @@ public class Authorize extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        PropertyReader reader = PropertyReader.init();
+
         String code = request.getParameter("code");
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         out.println("<h2>Authorization</h2>");
         out.println("<ul>");
-        out.println("<li><strong>code:</strong>"+code+"</li>");
+        out.println("<li><strong>Request:</strong>" + reader.getAuthorizationEndpoint() + "</li>");
+        out.println("<li><strong>Response:</strong> " + request.getRequestURI() + "?" + request.getQueryString() + "</li>");
         out.println("</ul>");
 
-        PropertyReader reader = PropertyReader.init();
 
         HttpClient client = HttpClientBuilder.create().build();
         HttpPost post = new HttpPost(reader.accessTokenUri());
         post.addHeader("Accept","application/json");
         post.addHeader("Content-Type","application/x-www-form-urlencoded");
-        List<NameValuePair> urlParameters = new ArrayList<>();
-        urlParameters.add(new BasicNameValuePair("code", code));
-        urlParameters.add(new BasicNameValuePair("redirect_uri", reader.authorizationCallbackUri()));
-        urlParameters.add(new BasicNameValuePair("client_id", reader.clientId()));
-        urlParameters.add(new BasicNameValuePair("scope", reader.scope()));
-        urlParameters.add(new BasicNameValuePair("client_secret", reader.clientSecret()));
-        urlParameters.add(new BasicNameValuePair("grant_type", "authorization_code"));
 
-        post.setEntity(new UrlEncodedFormEntity(urlParameters));
+        post.setEntity(new UrlEncodedFormEntity(getUrlParameters(code,reader)));
 
         HttpResponse tokenResponse = client.execute(post);
         out.println("<h2>Access token</h2>");
@@ -73,6 +68,17 @@ public class Authorize extends HttpServlet {
 
         request.getSession().setAttribute("name", userMap.get("name"));
         request.getSession().setAttribute("accessToken", tokenMap.get("access_token"));
+    }
+
+    private List<NameValuePair> getUrlParameters(String code, PropertyReader reader){
+        List<NameValuePair> urlParameters = new ArrayList<>();
+        urlParameters.add(new BasicNameValuePair("code", code));
+        urlParameters.add(new BasicNameValuePair("redirect_uri", reader.authorizationCallbackUri()));
+        urlParameters.add(new BasicNameValuePair("client_id", reader.clientId()));
+        urlParameters.add(new BasicNameValuePair("scope", reader.scope()));
+        urlParameters.add(new BasicNameValuePair("client_secret", reader.clientSecret()));
+        urlParameters.add(new BasicNameValuePair("grant_type", "authorization_code"));
+        return urlParameters;
     }
 
 
